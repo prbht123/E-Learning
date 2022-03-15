@@ -17,6 +17,9 @@ from django.contrib import admin
 from django.urls import path,include
 #from django.contrib.auth import views as auth_views
 from django.contrib.auth.views import LoginView,LogoutView
+from courses.views import CourseListView
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     
@@ -24,5 +27,8 @@ urlpatterns = [
     path('accounts/logout/', LogoutView.as_view(template_name='registration/logged_out.html'), name='logout'),
     path('admin/', admin.site.urls),
     path('course/', include('courses.urls',namespace="course")),
-    
+    path('', CourseListView.as_view(), name='course_list'),
+    path('students/', include('students.urls')),
 ]
+
+urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

@@ -1,22 +1,12 @@
 {% extends "base.html" %}
-{% block title %}My courses{% endblock %}
+{% block title %}Delete course{% endblock %}
 {% block content %}
-<h1>My courses</h1>
+<h1>Delete course "{{ object.title }}"</h1>
 <div class="module">
-{% for course in object_list %}
-<div class="course-info">
-<h3>{{ course.title }}</h3>
-<p>
-<a href="">Edit</a>
-<a href="">Delete</a>
-</p>
-</div>
-{% empty %}
-<p>You haven't created any courses yet.</p>
-{% endfor %}
-<p>
-<a href="" class="button">Create new
-course</a>
-</p>
+<form action="" method="post">
+{% csrf_token %}
+<p>Are you sure you want to delete "{{ object }}"?</p>
+<input type="submit" class="button" value="Confirm">
+</form>
 </div>
 {% endblock %}

@@ -8,16 +8,19 @@
 <h3>{{ course.title }}</h3>
 
 <p>
-<a href="">Edit</a>
-<a href="">Delete</a>
-<a href="">Edit modules</a>
+<a href="{% url 'courses:course_edit' course.id %}">Edit</a>
+<a href="{% url 'courses:course_delete' course.id %}">Delete</a>
+<a href="{% url 'courses:course_module_update' course.id %}">Edit modules</a>
+{% if course.modules.count > 0 %}
+<a href="{% url 'courses:module_content_list' course.modules.first.id%}">Manage contents</a>
+{% endif %}
 </p>
 </div>
 {% empty %}
 <p>You haven't created any courses yet.</p>
 {% endfor %}
 <p>
-<a href="" class="button">Create new course</a>
+<a href="{% url 'courses:course_create' %}" class="button">Create new course</a>
 </p>
 </div>
 {% endblock %}

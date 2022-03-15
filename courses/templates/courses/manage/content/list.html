@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Content {% endblock %}
+{% block content %}
+{% for i in data %}
+{{i}}
+{{i.module.course.owner}}
+{{i.module.course.subject}}
+{{i.module.course.title}}
+{{i.module.title}}
+{{i.module.description}}
+{{i.object_id}}
+<br>
+------------------------------
+<br>
+{% endfor %}
+{% endblock %}

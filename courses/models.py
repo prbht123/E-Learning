@@ -58,8 +58,8 @@ class BaseContent(models.Model):
     class Meta:
         abstract = True
 
-class Text(BaseContent):
-    body = models.TextField()
+#class Text(BaseContent):
+#    body = models.TextField()
 
 
 class ItemBase(models.Model):

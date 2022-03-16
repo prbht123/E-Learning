@@ -1,8 +1,11 @@
 {% extends "base.html" %}
+{% load cache %}
 {% block title %}
 {{ object.title }}
 {% endblock %}
 {% block content %}
+
+<p>cache in view site </p>
 <h1>
 {{ module.title }}
 </h1>
@@ -27,11 +30,13 @@ Module <span class="order">{{ m.order|add:1
 </ul>
 </div>
 <div class="module">
+{% cache 40 module_contents  %}
 {% for content in module.contents.all %}
 {% with item=content.item %}
 <h2>{{ item.title }}</h2>
 {{ item.render }}
 {% endwith %}
 {% endfor %}
+{% endcache module_contents %}
 </div>
 {% endblock %}

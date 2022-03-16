@@ -16,7 +16,7 @@ from braces.views import CsrfExemptMixin, JsonRequestResponseMixin
 from django.db.models import Count
 from .models import Subject
 from django.views.generic.detail import DetailView
-
+from django.core.cache import cache
 # Create your views here.
 
 """ 
@@ -183,7 +183,10 @@ class CourseListView(TemplateResponseMixin, View):
     model = Course
     template_name = 'courses/course/list.html'
     def get(self, request, subject=None):
-        subjects = Subject.objects.annotate(total_courses=Count('courses'))
+        subjects = cache.get('all_subjects')
+        if not subjects:
+            bjects = Subject.objects.annotate(total_courses=Count('courses'))
+            cache.set('all_subjects', subjects)
         courses = Course.objects.annotate(total_modules=Count('modules'))
         if subject:
             subject = get_object_or_404(Subject, slug=subject)

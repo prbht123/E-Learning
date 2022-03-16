@@ -40,12 +40,15 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'courses',
     'students',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -129,3 +132,24 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #LOGIN_REDIRECT_URL = reverse('student_course_list')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+
+
+CACHE_MIDDLEWARE_ALIAS = 'default'
+CACHE_MIDDLEWARE_SECONDS = 40 
+CACHE_MIDDLEWARE_KEY_PREFIX = 'educa'
+
+SESSION_ENGINE = "django.contrib.sessions.backends.cache" 
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.PyMemcacheCache',
+        'LOCATION': '127.0.0.1:11211',
+    }
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+    'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
